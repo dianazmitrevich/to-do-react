@@ -3,6 +3,7 @@ import { fetchTasks, addTask } from "../services/TaskService";
 import TaskForm from "./TaskForm";
 import TaskItem from "./TaskItem";
 import { Task } from "../models/Task";
+import { updateTask, deleteTask } from "../services/TaskService";
 
 const TaskList: React.FC = () => {
     const [tasks, setTasks] = useState<Task[]>([]);
@@ -21,11 +22,11 @@ const TaskList: React.FC = () => {
         fetchTasksData();
     }, []);
 
-    const handleAddTask = async (taskTitle: string) => {
+    const handleAddTask = async (taskTitle: string, taskDesc: string) => {
         try {
             const newTask: Omit<Task, "_id"> = {
                 title: taskTitle,
-                description: "",
+                description: taskDesc,
                 completed: false,
             };
             await addTask(newTask);
@@ -37,15 +38,34 @@ const TaskList: React.FC = () => {
         }
     };
 
+    const handleDeleteTask = (id: string) => {
+        setTasks(tasks.filter((task) => task._id !== id));
+    };
+
+    const handleToggleComplete = async (task: Task) => {
+        try {
+            const updatedTask = { ...task, completed: !task.completed };
+            await updateTask(updatedTask);
+            setTasks(tasks.map((t) => (t._id === task._id ? updatedTask : t)));
+        } catch (error) {
+            console.error("Failed to update task status:", error);
+        }
+    };
+
     return (
         <div>
             <TaskForm onAddTask={handleAddTask} />
             {error && <p>{error}</p>}
-            <ul>
+            <div className="tasks__list">
                 {tasks.map((task) => (
-                    <TaskItem key={task._id} task={task} />
+                    <TaskItem
+                        key={task._id}
+                        task={task}
+                        onToggleComplete={handleToggleComplete}
+                        onDelete={handleDeleteTask}
+                    />
                 ))}
-            </ul>
+            </div>
         </div>
     );
 };

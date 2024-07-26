@@ -1,5 +1,5 @@
 import React, { createContext, useReducer, ReactNode } from "react";
-import { Task } from "../types";
+import { Task } from "../models/Task";
 
 type TaskAction =
     | { type: "ADD_TASK"; task: Task }

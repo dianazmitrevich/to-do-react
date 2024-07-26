@@ -22,3 +22,18 @@ export const addTask = async (task: Omit<Task, "_id">): Promise<Task> => {
         throw error;
     }
 };
+
+export const updateTask = async (task: Task) => {
+    try {
+        const url = `${API_URL}/${task._id}`;
+        const response = await axios.put(url, task);
+        return response.data;
+    } catch (error) {
+        console.error("Error updating task:", error);
+        throw error;
+    }
+};
+
+export const deleteTask = async (id: string): Promise<void> => {
+    await axios.delete(`${API_URL}/${id}`);
+};
