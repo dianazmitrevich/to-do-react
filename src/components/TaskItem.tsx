@@ -20,16 +20,14 @@ const EditTaskModal: React.FC<{ task: Task; onClose: () => void; onSave: (update
         <div className="modal">
             <div className="modal__content">
                 <h2>Edit Task</h2>
-                <label>
-                    Title:
+                <div className="fields">
                     <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-                </label>
-                <label>
-                    Description:
                     <textarea value={description} onChange={(e) => setDescription(e.target.value)} />
-                </label>
-                <button onClick={handleSave}>Save</button>
-                <button onClick={onClose}>Cancel</button>
+                </div>
+                <div className="btns">
+                    <button onClick={handleSave}>Save</button>
+                    <button onClick={onClose}>Cancel</button>
+                </div>
             </div>
         </div>
     );
@@ -63,14 +61,15 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onToggleComplete, onDelete })
     };
 
     return (
-        <div className="list__item item">
+        <div
+            className={task.completed ? "completed list__item item" : "list__item item"}
+            onClick={() => onToggleComplete(task)}>
             <div className="item__name">{task.title}</div>
             <div className="item__desc">{task.description}</div>
-            <button onClick={() => onToggleComplete(task)}>
-                {task.completed ? "Mark as Incomplete" : "Mark as Complete"}
-            </button>
-            <button onClick={handleDelete}>Delete</button>
-            <button onClick={() => setIsModalOpen(true)}>Edit</button>
+            <div className="item__btns">
+                <button onClick={handleDelete}>🗑️</button>
+                <button onClick={() => setIsModalOpen(true)}>✍️</button>
+            </div>
             {isModalOpen && <EditTaskModal task={task} onClose={() => setIsModalOpen(false)} onSave={handleSave} />}
         </div>
     );

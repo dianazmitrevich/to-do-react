@@ -18,7 +18,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ onAddTask }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="form add">
             <input type="text" value={taskName} onChange={(e) => setTaskName(e.target.value)} placeholder="New task" />
             <input
                 type="text"
@@ -26,7 +26,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ onAddTask }) => {
                 onChange={(e) => setTaskDesc(e.target.value)}
                 placeholder="Description"
             />
-            <button type="submit">Add Task</button>
+            <button type="submit">Add</button>
         </form>
     );
 };

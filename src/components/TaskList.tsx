@@ -53,10 +53,10 @@ const TaskList: React.FC = () => {
     };
 
     return (
-        <div>
+        <>
             <TaskForm onAddTask={handleAddTask} />
             {error && <p>{error}</p>}
-            <div className="tasks__list">
+            <div className="tasks-list list">
                 {tasks.map((task) => (
                     <TaskItem
                         key={task._id}
@@ -66,7 +66,7 @@ const TaskList: React.FC = () => {
                     />
                 ))}
             </div>
-        </div>
+        </>
     );
 };
 

@@ -1,6 +1,7 @@
 import React from "react";
 import TaskList from "./components/TaskList";
 import TaskForm from "./components/TaskForm";
+import "./assets/css/style.css";
 
 const App: React.FC = () => {
     const handleAddTask = (taskName: string) => {
@@ -9,8 +10,10 @@ const App: React.FC = () => {
 
     return (
         <div className="App">
-            <h1>To-Do List</h1>
-            <TaskList />
+            <div className="container">
+                <h1>Todo App</h1>
+                <TaskList />
+            </div>
         </div>
     );
 };
